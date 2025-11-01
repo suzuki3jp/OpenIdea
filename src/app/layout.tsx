@@ -14,6 +14,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>{children}</body>
+      {/* MobileMenu, DesktopMenu を useIsSmallDevice で切り替える */}
     </html>
   );
 }
