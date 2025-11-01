@@ -1,4 +1,4 @@
-import { MobileMenu } from "@/features/menu/components/mobile";
+import { SettingsButton } from "@/features/menu/components/settings-button";
 export default function Home() {
-  return <MobileMenu></MobileMenu>;
+  return <SettingsButton></SettingsButton>;
 }
