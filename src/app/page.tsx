@@ -1,3 +1,4 @@
+import { SettingsButton } from "@/features/menu/components/settings-button";
 export default function Home() {
-  return <h1>うおおおおおお</h1>;
+  return <SettingsButton></SettingsButton>;
 }
