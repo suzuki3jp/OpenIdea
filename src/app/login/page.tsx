@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { signInWithGoogle, signOut } from "@/lib/supabase/auth-google";
 
-export default function LoginPage() {
+export default function () {
   const handleGoogleLogin = async () => {
     await signInWithGoogle();
   };
