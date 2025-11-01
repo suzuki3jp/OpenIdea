@@ -1,3 +1,4 @@
+import { MobileMenu } from "@/features/menu/components/mobile";
 export default function Home() {
-  return <h1>うおおおおおお</h1>;
+  return <MobileMenu></MobileMenu>;
 }
