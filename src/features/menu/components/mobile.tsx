@@ -1,7 +1,3 @@
-/**
- * Mobile 版のメニューコンポーネント
- * 画面下部につくやつ
- */
 import "./menu.css";
 import { useId } from "react";
 import { HomeButton } from "@/features/menu/components/home-button";
