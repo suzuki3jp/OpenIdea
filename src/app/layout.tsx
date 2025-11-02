@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { MobileMenu } from "@/features/menu/components/mobile";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -13,7 +14,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {children}
+        <MobileMenu />
+      </body>
       {/* MobileMenu, DesktopMenu を useIsSmallDevice で切り替える */}
     </html>
   );
