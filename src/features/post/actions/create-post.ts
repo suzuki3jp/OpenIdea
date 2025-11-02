@@ -1,18 +1,12 @@
 "use server"
 
 import * as v from 'valibot';
+import { postSchema } from '../schemas';
 import { createClient } from '@/lib/supabase/server'; 
-
-const postSchema = v.object({
-    title: v.string(),
-    freeContent: v.string(),
-    paidContent: v.string(),
-})
 
 export async function createPost(formData: FormData) {
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
-    console.log(user);
     if (!user) {
         return { success: false, message: "認証が必要です" };
     }
@@ -34,11 +28,12 @@ export async function createPost(formData: FormData) {
                 good_count: 0,
                 bad_count: 0,
             })
-        console.log(data);
         if (error) {
+            // biome-ignore lint/suspicious/noConsole: <explanation>
             console.error("supabase insert error",error);
         }
     } catch (error) {
+        // biome-ignore lint/suspicious/noConsole: <explanation>
         console.error(error);
     }
 }
