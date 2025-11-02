@@ -1,0 +1,88 @@
+.menu {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 140px;
+  z-index: 10;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.menu svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 -2px 4px rgba(0, 0, 0, 0.25));
+}
+
+.buttons {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 140px;
+  display: flex;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.profile,
+.setting {
+  height: 100%;
+  border: none;
+  flex-grow: 1;
+  pointer-events: auto;
+  position: relative;
+}
+
+.profile {
+  clip-path: polygon(0 0, 100% 50%, 100% 100%, 0 100%);
+}
+
+.setting {
+  clip-path: polygon(0 50%, 100% 0, 100% 100%, 0 100%);
+}
+
+.profile-icon,
+.setting-icon {
+  position: absolute;
+  bottom: 34px;
+  width: 43px;
+  height: 43px;
+}
+
+.profile-icon {
+  right: 105px;
+}
+
+.setting-icon {
+  left: 105px;
+}
+
+.home-button {
+  position: fixed;
+  bottom: 9px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 112px;
+  aspect-ratio: 1 / 1;
+  border-radius: 100%;
+  z-index: 20;
+  background-image: linear-gradient(#fff3d0, #fed88f);
+  overflow: hidden;
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.25);
+}
+
+.home-button button {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  justify-content: center;
+  align-content: center;
+}
+
+.home-icon {
+  width: 43px;
+  aspect-ratio: 1 / 1;
+  margin: auto;
+  pointer-events: none;
+}
