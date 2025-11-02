@@ -4,9 +4,9 @@ import { BackButton } from "./back-button"
 
 export function PostCreationHeader() {
     return (
-        <div className="bg-[#FFEBB1] h-32 flex space-x-5">
+        <div className="flex h-32 space-x-5 bg-[#FFEBB1]">
             <BackButton />
-            <h1 className="text-2xl my-auto">投稿</h1>
+            <h1 className="my-auto text-2xl">投稿</h1>
         </div>
     )
 }
