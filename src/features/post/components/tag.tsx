@@ -1,11 +1,14 @@
 "use client";
 
-export type TypeTag = {
+{
+  /* TODO: タグテーブルできたらちゃんとしたとこに型定義する */
+}
+export type TagType = {
   name: string;
 };
 
 type Props = {
-  tag: TypeTag;
+  tag: TagType;
 };
 
 export function Tag({ tag }: Props) {
