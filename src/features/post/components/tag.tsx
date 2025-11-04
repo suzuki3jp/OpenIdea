@@ -13,7 +13,7 @@ type Props = {
 
 export function Tag({ tag }: Props) {
   return (
-    <p className={`rounded-full bg-blueiceSoft px-3 text-[#6E6E6E]`}>
+    <p className={`rounded-full bg-[#A6F093] px-3 text-[#6E6E6E]`}>
       # {tag.name}
     </p>
   );
