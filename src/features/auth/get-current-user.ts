@@ -6,6 +6,7 @@ export async function getCurrentUser(
   client: SupabaseClient,
 ): Promise<User | null> {
   const userId = (await client.auth.getUser()).data?.user?.id ?? null;
+
   if (!userId) return null;
   const currentUser = await getUserById(userId, client);
 

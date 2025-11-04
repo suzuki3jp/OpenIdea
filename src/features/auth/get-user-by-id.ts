@@ -7,6 +7,7 @@ export async function getUserById(id: string, client: SupabaseClient) {
     .select("*")
     .eq("user_id", id)
     .maybeSingle();
+
   if (error || !user) return null;
 
   return convertDBUserToUser(user);
