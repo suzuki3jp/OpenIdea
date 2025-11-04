@@ -12,20 +12,20 @@ export async function GET(request: Request) {
 
     if (!error) {
       const userRes = await supabase.auth.getUser();
-      const uid = userRes.data?.user?.id ?? null;
+      const user = userRes.data?.user ?? null;
 
-      if (uid) {
+      if (user?.id) {
         const { data, error: selectError } = await supabase
           .from("Users")
           .select("user_id")
-          .eq("user_id", uid)
+          .eq("user_id", user.id)
           .maybeSingle();
 
         if (!selectError && data === null) {
           const payload = {
-            user_id: uid,
+            user_id: user.id,
             display_name: null,
-            icon_path: null,
+            icon_path: user.user_metadata.avatar_url,
             banner_path: null,
             level: 1,
             self_introduction: null,
@@ -35,10 +35,7 @@ export async function GET(request: Request) {
             .from("Users")
             .insert(payload);
 
-          if (insertError && insertError) {
-            // biome-ignore lint/suspicious/noConsole: <explanation>
-            console.error("ユーザー作成エラー", insertError);
-          }
+          if (insertError) return;
         }
 
         const forwardedHost = request.headers.get("x-forwarded-host");
