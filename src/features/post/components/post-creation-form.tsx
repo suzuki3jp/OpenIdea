@@ -14,17 +14,19 @@ export function PostCreationForm() {
   const [freeContent, setFreeContent] = useState("");
   const [paidContent, setPaidContent] = useState("");
 
-  const [isSubmmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isTitleError, setIsTitleError] = useState(true);
   const [isFreeContentError, setIsFreeContentError] = useState(true);
   const [isPaidContentError, setIsPaidContentError] = useState(true);
 
   const isDisabledButton =
-    (!title && !freeContent && !paidContent) ||
+    !title ||
+    !freeContent ||
+    !paidContent ||
     isTitleError ||
     isFreeContentError ||
     isPaidContentError ||
-    isSubmmitting;
+    isSubmitting;
 
   async function handleAction(formData: FormData): Promise<void> {
     await createPost(formData);
