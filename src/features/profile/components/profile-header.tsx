@@ -20,7 +20,7 @@ export function ProfileHeader({
   const isMyProfile: boolean = currentUserId === user?.id;
 
   return (
-    <div className="h-82 w-full border-b bg-white shadow-[4px_4px_4px_0px_rgba(0,0,0,0.4)]">
+    <div className="h-82 w-full bg-white shadow-[4px_4px_4px_0px_rgba(0,0,0,0.4)]">
       <ProfileBackArrow />
       <ProfileBanner bannerPath={user?.bannerPath ?? ""} />
       <div className="relative mx-8 flex h-9 items-end">
