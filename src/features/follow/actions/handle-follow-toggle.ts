@@ -21,13 +21,11 @@ export async function handleFollowToggle(
 
   if (!isFollow) {
     await createFollow(currentUserId, userId, client);
-    return { isFollow: true };
+  } else {
+    if (followeeId && followerId) {
+      await deleteFollow(followeeId, followerId, client);
+    }
   }
 
-  if (followeeId && followerId) {
-    await deleteFollow(followeeId, followerId, client);
-    return { isFollow: false };
-  }
-
-  return { isFollow: isFollow };
+  return !isFollow;
 }

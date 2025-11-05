@@ -7,12 +7,12 @@ export function ProfileFollowButton({
   currentUserId: string | null;
   userId: string | null;
 }) {
-  function onClick() {
+  async function onClick() {
     if (!currentUserId || !userId || currentUserId === userId) {
       return;
     }
 
-    const isFollow = handleFollowToggle(currentUserId, userId);
+    const isFollow = await handleFollowToggle(currentUserId, userId);
   }
 
   return (
