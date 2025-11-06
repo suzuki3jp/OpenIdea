@@ -2,13 +2,18 @@
 
 import { redirect } from "next/navigation";
 import * as v from "valibot";
-import { convertDBPostToPost } from "@/features/lib/convert-dbpost-to-post";
+import { createTags } from "@/features/tags/actions/create-tags";
+import type { TagType } from "@/features/tags/types";
+import { consoleError } from "@/lib/consoleError";
 import { createClient } from "@/lib/supabase/server";
+import { convertDBPostToPost } from "../lib/convert-post";
 import { postSchema } from "../schemas";
+import type { NewPost } from "../types";
 
-export async function createPost(formData: FormData) {
+export async function createPost(newPost: NewPost, newTags: TagType[]) {
   const supabase = await createClient();
 
+  // ログインしてない人ははじく
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -16,31 +21,51 @@ export async function createPost(formData: FormData) {
     return { success: false, message: "認証が必要です" };
   }
 
+  // postのバリデーション
   const rawData = {
-    title: formData.get("title"),
-    freeContent: formData.get("freeContent"),
-    paidContent: formData.get("paidContent"),
+    title: newPost.postTitle,
+    freeContent: newPost.freeContent,
+    paidContent: newPost.paidContent,
   };
-  const validatedData = v.parse(postSchema, rawData);
+  const validatedPostData = v.parse(postSchema, rawData);
 
-  const { data, error } = await supabase
+  // Create Tags
+  const postTags = await createTags(newTags);
+
+  // Insert Post
+  const { data, error: postError } = await supabase
     .from("Posts")
     .insert({
       user_id: user.id,
-      post_title: validatedData.title,
-      free_content: validatedData.freeContent,
-      paid_content: validatedData.paidContent,
+      post_title: validatedPostData.title,
+      free_content: validatedPostData.freeContent,
+      paid_content: validatedPostData.paidContent,
       good_count: 0,
       bad_count: 0,
     })
     .select()
     .single();
 
-  if (error) {
-    // biome-ignore lint/suspicious/noConsole: <explanation>
-    console.error("supabase insert error", error);
+  if (postError) {
+    consoleError(postError);
   }
+
+  // convert post
   const post = convertDBPostToPost(data);
+
+  // postにタグあればInsert PostTags
+  if (postTags) {
+    const { error: postTagsError } = await supabase.from("PostTags").insert(
+      postTags.map((tag) => ({
+        post_id: post.postId,
+        tag_id: tag.tagId,
+      })),
+    );
+
+    if (postTagsError) {
+      consoleError(postTagsError);
+    }
+  }
 
   redirect(`/post/${post.postId}`);
 }

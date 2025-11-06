@@ -1,7 +1,8 @@
 "use server";
 
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { convertDBPostToPost } from "@/features/lib/convert-dbpost-to-post";
+import { consoleError } from "@/lib/consoleError";
+import { convertDBPostToPost } from "../lib/convert-post";
 import type { Post } from "../types";
 
 export async function getPostById(
@@ -15,8 +16,7 @@ export async function getPostById(
     .single();
 
   if (error) {
-    // biome-ignore lint/suspicious/noConsole: <explanation>
-    console.error(error);
+    consoleError(error);
   }
 
   return convertDBPostToPost(data);

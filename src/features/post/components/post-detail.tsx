@@ -1,27 +1,23 @@
 import { ChevronLeft as BackButtonIcon, Circle as Icon } from "lucide-react";
+import { TagBadge } from "@/features/tags/components/tag-badge";
+import type { TagType } from "@/features/tags/types";
 import type { Post } from "../types";
 import { ContentLock } from "./content-lock";
 import { PostActions } from "./post-actions";
-import { Tag, type TagType } from "./tag";
 
 /* TODO: タグテーブルできたらtestHogeは消す */
-const testTags: TagType[] = [
-  { name: "test1" },
-  { name: "test2" },
-  { name: "test3" },
-  { name: "test4" },
-];
 const testPaid = false;
 
 type PostDetailProps = {
   post: Post;
+  tags: TagType[];
 };
 
-export function PostDetail({ post }: PostDetailProps) {
+export function PostDetail({ post, tags }: PostDetailProps) {
   return (
     <main className="flex min-h-screen flex-col">
       <BackButtonIcon size={50} className="absolute top-12 left-6" />
-      <PostHeader post={post} tags={testTags} />
+      <PostHeader post={post} tags={tags} />
       <PostContent post={post} isPaid={testPaid} />
     </main>
   );
@@ -45,7 +41,7 @@ function PostHeader({ post, tags }: PostHeaderProps) {
             {tags.map((tag, index) => (
               // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
               <li key={index}>
-                <Tag tag={tag} />
+                <TagBadge tag={tag} />
               </li>
             ))}
           </ul>

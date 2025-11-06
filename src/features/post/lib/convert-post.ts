@@ -1,4 +1,4 @@
-import type { Post } from "../post/types";
+import type { Post } from "../types";
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export function convertDBPostToPost(data: any): Post {
