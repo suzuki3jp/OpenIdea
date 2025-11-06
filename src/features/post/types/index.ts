@@ -7,3 +7,9 @@ export type Post = {
   freeContent: string;
   paidContent: string;
 };
+
+export type NewPost = {
+  postTitle: string;
+  freeContent: string;
+  paidContent: string;
+};
