@@ -1,5 +1,3 @@
-"use client";
-
 import { Selector } from "@/components/selector/selector";
 
 interface ProfileBodyTypeSelectorProps {
