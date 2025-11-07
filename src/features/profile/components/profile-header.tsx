@@ -1,8 +1,8 @@
 import type { User } from "@/features/auth/convert-db-user-to-user";
+import { FollowContainer } from "./follow-container";
 import { ProfileBackArrow } from "./profile-back-arrow";
 import { ProfileBanner } from "./profile-banner";
 import { ProfileBodyTypeSelector } from "./profile-body-type-selector";
-import { ProfileFollowButton } from "./profile-follow-button";
 import { ProfileIcon } from "./profile-icon";
 import { ProfileLevel } from "./profile-level";
 import {
@@ -10,7 +10,7 @@ import {
   ProfileSelfIntroduction,
 } from "./profile-textarea";
 
-export function ProfileHeader({
+export async function ProfileHeader({
   user,
   currentUserId,
 }: {
@@ -28,8 +28,8 @@ export function ProfileHeader({
         <ProfileLevel level={user?.level ?? 1} />
 
         {!isMyProfile && (
-          <ProfileFollowButton
-            currentUserId={currentUserId ?? null}
+          <FollowContainer
+            currentUserId={currentUserId}
             userId={user?.id ?? null}
           />
         )}
