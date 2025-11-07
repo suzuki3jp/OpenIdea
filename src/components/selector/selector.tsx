@@ -2,7 +2,14 @@
 import { useState } from "react";
 import { SelectorButton } from "./selector-button";
 
-export function Selector({ buttonItems }: { buttonItems: string[] }) {
+export function Selector({
+  buttonItems,
+}: {
+  buttonItems: {
+    label: string;
+    href: { pathname: string; query: string };
+  }[];
+}) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const buttonItemLength = buttonItems.length;
@@ -23,10 +30,11 @@ export function Selector({ buttonItems }: { buttonItems: string[] }) {
   return (
     <div className="relative mx-auto mt-4 h-[37px] w-[329px] cursor-pointer items-center rounded-full border-none bg-[#F6F4E0] shadow-[inset_2px_4px_4px_rgba(0,0,0,0.25)]">
       <div className="absolute top-[3px] left-[5px] flex h-[31px] w-[319px] rounded-full border-none">
-        {buttonItems.map((label, index) => (
+        {buttonItems.map((item, index) => (
           <SelectorButton
-            key={label}
-            label={label}
+            key={item.label}
+            label={item.label}
+            href={item.href}
             setActiveIndex={setActiveIndex}
             activeIndex={activeIndex}
             index={index}
