@@ -1,10 +1,16 @@
 import { User } from "lucide-react";
-export function ProfileButton() {
+import Link from "next/link";
+import { createClient } from "../../../lib/supabase/server";
+import { getCurrentUser } from "../../auth/get-current-user";
+
+export async function ProfileButton() {
+  const client = await createClient();
+  const user = await getCurrentUser(client);
   return (
-    <button className="profile" type="button">
+    <Link href={`/users/${user?.id}`} className="profile">
       <div className="profile-icon">
         <User className="h-full w-full stroke-[2.5] text-[#946B54]" />
       </div>
-    </button>
+    </Link>
   );
 }
