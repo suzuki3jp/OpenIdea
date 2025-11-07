@@ -1,4 +1,8 @@
+import Link from "next/link";
 import type { User } from "@/features/auth/convert-db-user-to-user";
+import { getFollow } from "@/features/follow/actions/get-follow";
+import { createClient } from "@/lib/supabase/server";
+import { FollowContainer } from "./follow-container";
 import { ProfileBackArrow } from "./profile-back-arrow";
 import { ProfileBanner } from "./profile-banner";
 import { ProfileBodyTypeSelector } from "./profile-body-type-selector";
@@ -10,7 +14,7 @@ import {
   ProfileSelfIntroduction,
 } from "./profile-textarea";
 
-export function ProfileHeader({
+export async function ProfileHeader({
   user,
   currentUserId,
 }: {
@@ -28,8 +32,8 @@ export function ProfileHeader({
         <ProfileLevel level={user?.level ?? 1} />
 
         {!isMyProfile && (
-          <ProfileFollowButton
-            currentUserId={currentUserId ?? null}
+          <FollowContainer
+            currentUserId={currentUserId}
             userId={user?.id ?? null}
           />
         )}
