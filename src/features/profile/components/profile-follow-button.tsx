@@ -19,7 +19,7 @@ export function ProfileFollowButton({
 
   return (
     <>
-      {isFollow ? (
+      {!isFollow ? (
         <button
           type="button"
           onClick={async () => await onClick()}

@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { getFollow } from "../../follow/actions/get-follow";
+import { getIsFollow } from "../../follow/actions/get-follow";
 import { LoginPromptButton } from "./login-prompt-button";
 import { ProfileFollowButton } from "./profile-follow-button";
 
@@ -20,14 +20,13 @@ export async function FollowContainer({
       <LoginPromptButton />
     );
   else {
-    const isFollow = await getFollow({ currentUserId, userId, client }); // フォローしてるかどうか欲しい(get-follow)
-    const isFollowing = isFollow.followeeId == null;
+    const isFollow = await getIsFollow({ currentUserId, userId, client }); // フォローしてるかどうか欲しい(get-follow)
 
     return (
       <ProfileFollowButton
         currentUserId={currentUserId}
         userId={userId}
-        isFollowProp={isFollowing}
+        isFollowProp={isFollow}
       />
     );
   }

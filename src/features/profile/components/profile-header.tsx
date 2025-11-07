@@ -1,12 +1,8 @@
-import Link from "next/link";
 import type { User } from "@/features/auth/convert-db-user-to-user";
-import { getFollow } from "@/features/follow/actions/get-follow";
-import { createClient } from "@/lib/supabase/server";
 import { FollowContainer } from "./follow-container";
 import { ProfileBackArrow } from "./profile-back-arrow";
 import { ProfileBanner } from "./profile-banner";
 import { ProfileBodyTypeSelector } from "./profile-body-type-selector";
-import { ProfileFollowButton } from "./profile-follow-button";
 import { ProfileIcon } from "./profile-icon";
 import { ProfileLevel } from "./profile-level";
 import {

@@ -16,6 +16,7 @@ export function ProfileBackArrow() {
           />
         </symbol>
       </svg>
+      P
       <svg
         role="img"
         aria-label={title}
