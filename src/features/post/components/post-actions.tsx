@@ -5,6 +5,7 @@ import {
   Star as LikeButtonIcon,
 } from "lucide-react";
 import { useState } from "react";
+import { decrementLevel, incrementLevel } from "@/features/level";
 import { createClient } from "@/lib/supabase/client";
 import { dislikePost, undislikePost } from "../dislike";
 import { likePost, unlikePost } from "../like";
@@ -33,12 +34,14 @@ export function LikeButton({
     if (currentIsLiked) {
       const isSuccess = !(await unlikePost(postId, userId, client));
       if (isSuccess) {
+        await decrementLevel(userId, client);
         setCurrentIsLiked(false);
         setCurrentLikeCount((prev) => prev - 1);
       }
     } else {
       const isSuccess = !(await likePost(postId, userId, client));
       if (isSuccess) {
+        await incrementLevel(userId, client);
         setCurrentIsLiked(true);
         setCurrentLikeCount((prev) => prev + 1);
       }
@@ -79,12 +82,14 @@ export function DislikeButton({
     if (currentIsDisliked) {
       const isSuccess = !(await undislikePost(postId, userId, client));
       if (isSuccess) {
+        await incrementLevel(userId, client); // undislike したら dislike されたときに下がったレベルを戻す
         setCurrentIsDisliked(false);
         setCurrentDislikeCount((prev) => prev - 1);
       }
     } else {
       const isSuccess = !(await dislikePost(postId, userId, client));
       if (isSuccess) {
+        await decrementLevel(userId, client);
         setCurrentIsDisliked(true);
         setCurrentDislikeCount((prev) => prev + 1);
       }
