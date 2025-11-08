@@ -2,6 +2,9 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { convertDBPostToPost } from "@/features/lib/convert-dbpost-to-post";
 import type { Post } from "../types";
 
+/**
+ * userIdsが空配列の場合は空配列、nullの場合は全ての投稿を取得する仕様
+ */
 export async function getPosts(
   client: SupabaseClient,
   limit: number,
@@ -28,4 +31,3 @@ export async function getPosts(
 
   return postData.map(convertDBPostToPost);
 }
-//userIdsが空配列の場合は空配列、nullの場合は全ての投稿を取得する仕様

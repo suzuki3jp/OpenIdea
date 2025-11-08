@@ -1,7 +1,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { getCurrentUser } from "@/features/auth/get-current-user";
 
-export async function getIdsByCurrentId({
+export async function getCurrentUserFollowerIds({
   client,
 }: {
   client: SupabaseClient;

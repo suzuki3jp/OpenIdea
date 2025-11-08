@@ -3,16 +3,12 @@ import { getPostsByQuery } from "../actions/get-posts-by-query";
 import { HomeCard } from "./home-card";
 
 export async function HomeBody({
-  query,
+  query = "recommended",
   client,
 }: {
   query: string | string[] | undefined;
   client: SupabaseClient;
 }) {
-  if (!query) {
-    query = "recommended";
-  }
-
   const posts = await getPostsByQuery(query, client);
 
   if (!posts || posts.length === 0) {
