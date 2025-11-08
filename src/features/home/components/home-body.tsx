@@ -9,6 +9,10 @@ export async function HomeBody({
   query: string | string[] | undefined;
   client: SupabaseClient;
 }) {
+  if (!query) {
+    query = "recommended";
+  }
+
   const posts = await getPostsByQuery(query, client);
 
   if (!posts || posts.length === 0) {
