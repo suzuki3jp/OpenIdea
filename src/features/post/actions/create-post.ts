@@ -30,7 +30,7 @@ export async function createPost(newPost: NewPost, newTags: TagType[]) {
   const validatedPostData = v.parse(postSchema, rawData);
 
   // Create Tags
-  const postTags = await createTags(newTags);
+  const postTags = await createTags(supabase, newTags);
 
   // Insert Post
   const { data, error: postError } = await supabase
