@@ -1,5 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { convertDBPostToPost } from "@/features/lib/convert-dbpost-to-post";
+import { convertDBPostToPost } from "@/features/post/lib/convert-post";
 import type { Post } from "../types";
 
 /**
