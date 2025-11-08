@@ -3,7 +3,7 @@ import { PostButton } from "@/components/post-button.tsx/post-button";
 import { HomeBody } from "@/features/home/components/home-body";
 import { HomeBodyTypeSelector } from "@/features/home/components/home-body-type-selector";
 import { SearchBar } from "@/features/search/components/search-bar";
-
+import "./home.css";
 export function Home({
   query,
   client,
