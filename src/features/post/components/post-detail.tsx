@@ -1,5 +1,7 @@
 import { ChevronLeft as BackButtonIcon, Circle as Icon } from "lucide-react";
+import Image from "next/image";
 import { getCurrentUser } from "@/features/auth/get-current-user";
+import { getUserById } from "@/features/auth/get-user-by-id";
 import { TagBadge } from "@/features/tags/components/tag-badge";
 import type { TagType } from "@/features/tags/types";
 import { createClient } from "@/lib/supabase/server";
@@ -32,24 +34,48 @@ type PostHeaderProps = {
 };
 
 async function PostHeader({ post, tags }: PostHeaderProps) {
+  const client = await createClient();
+  const author = await getUserById(post.userId, client);
+  const authorIconPath = author?.iconPath ?? null;
+
   return (
     <header className="bg-[#FFFEEE]">
-      <div className="flex h-full flex-row space-x-5 px-8 pt-32">
-        {/* TODO: ユーザー機能が実装されたらアイコンに差し替える */}
-        <Icon size={90} color="gray" fill="gray" className="text-amber-700" />
-        <div className="flex w-full flex-col space-y-2 pt-4 pr-5">
-          <h1 className="w-full text-xl">{post.postTitle}</h1>
-          <hr />
-          <ul className="flex flex-wrap gap-2">
-            {tags.map((tag, index) => (
-              // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-              <li key={index}>
-                <TagBadge tag={tag} />
-              </li>
-            ))}
-          </ul>
-          <PostActions post={post} />
+      <div className="h-full px-8 pt-32">
+        <div className="flex space-x-5">
+          {authorIconPath ? (
+            <Image
+              src={authorIconPath}
+              alt="Author Icon"
+              width={62}
+              height={62}
+            />
+          ) : (
+            <Icon
+              size={62}
+              color="gray"
+              fill="gray"
+              className="text-amber-700"
+            />
+          )}
+
+          <div>
+            <h1 className="w-full text-xl">{post.postTitle}</h1>
+
+            <div className="space-y-2">
+              <hr />
+              <ul className="flex flex-wrap gap-2">
+                {tags.map((tag, index) => (
+                  // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                  <li key={index}>
+                    <TagBadge tag={tag} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
+
+        <PostActions post={post} />
       </div>
     </header>
   );
@@ -88,7 +114,7 @@ export async function PostActions({ post }: PostActionsProps) {
   const isDisliked = false; // TODO: dislike機能実装時に修正
 
   return (
-    <div className="my-5 flex flex-row space-x-8">
+    <div className="mx-auto my-5 flex w-fit flex-row space-x-8">
       <LikeButton
         postId={post.postId}
         userId={currentUser?.id ?? null}
