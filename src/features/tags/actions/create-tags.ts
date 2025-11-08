@@ -1,28 +1,36 @@
-"use server";
-
+import type { SupabaseClient } from "@supabase/supabase-js";
 import * as v from "valibot";
 import { consoleError } from "@/lib/consoleError";
-import { createClient } from "@/lib/supabase/server";
 import { convertDBTagsToTags } from "../lib/convert-tag";
 import { tagNameSchema } from "../schemas";
 import type { TagType } from "../types";
 
-export async function createTags(tags: TagType[]): Promise<TagType[] | null> {
-  const supabase = await createClient();
-
+export async function createTags(
+  supabase: SupabaseClient,
+  tags: TagType[],
+): Promise<TagType[] | null> {
   // tagのバリデーション
   const tagNames = tags.map((tag) => tag.tagName);
   const tagArraySchema = v.array(tagNameSchema);
   v.parse(tagArraySchema, tagNames);
 
+  // タグ追加
+  await supabase.from("Tags").upsert(
+    tags.map((tag) => ({ tag_name: tag.tagName })),
+    {
+      onConflict: "tag_name",
+    },
+  );
+
+  // 追加したタグをfavorite tagsに入れたいからtag_idを返してる
   const { data, error } = await supabase
     .from("Tags")
-    .insert(
-      tags.map((tag) => ({
-        tag_name: tag.tagName,
-      })),
-    )
-    .select("*");
+    .select("*")
+    .in(
+      "tag_name",
+      tags.map((tag) => tag.tagName),
+    );
+
   if (error) {
     consoleError(error);
     return null;

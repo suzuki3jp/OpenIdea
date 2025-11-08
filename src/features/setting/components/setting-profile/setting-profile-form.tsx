@@ -22,7 +22,9 @@ export function SettingProfileForm({ currentUser }: SettingProfileType) {
     currentUser.iconPath ?? defaultImage.src,
   );
 
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState<string>(
+    currentUser.displayName || "ななしさん",
+  );
 
   async function handleClick() {
     // ToDo バケットに画像入れたい（RLSどうしても無理で一旦諦め）
@@ -85,7 +87,7 @@ export function SettingProfileForm({ currentUser }: SettingProfileType) {
             type="text"
             onChange={(e) => setUserName(e.target.value)}
             value={userName}
-            className="text-center text-xl"
+            className="bg-linear-to-r from-[#F7FBFD] to-[#f4f3e3] text-center text-xl shadow-inner"
           />
         </SettingContainer>
 

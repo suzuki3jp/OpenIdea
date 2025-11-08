@@ -15,7 +15,7 @@ export default async function () {
   return (
     <SettingBackground>
       <SettingHeader prevUrl={"/setting"} label={"興味分野の設定"} />
-      <SettingInterestForm />
+      <SettingInterestForm currentUser={currentUser} />
     </SettingBackground>
   );
 }
