@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import { dislikePost, undislikePost } from "../dislike";
 import { likePost, unlikePost } from "../like";
 
 type CommonProps = {
@@ -65,13 +66,46 @@ export function DislikeButton({
   isDisliked,
   dislikeCount,
 }: CommonProps & { isDisliked: boolean; dislikeCount: number }) {
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  const [currentIsDisliked, setCurrentIsDisliked] = useState(isDisliked);
+  const [currentDislikeCount, setCurrentDislikeCount] = useState(dislikeCount);
+
+  async function handleDislikeOnClick() {
+    if (!userId) return;
+    const client = createClient();
+
+    setIsDisabled(true);
+    if (currentIsDisliked) {
+      const isSuccess = !(await undislikePost(postId, userId, client));
+      if (isSuccess) {
+        setCurrentIsDisliked(false);
+        setCurrentDislikeCount((prev) => prev - 1);
+      }
+    } else {
+      const isSuccess = !(await dislikePost(postId, userId, client));
+      if (isSuccess) {
+        setCurrentIsDisliked(true);
+        setCurrentDislikeCount((prev) => prev + 1);
+      }
+    }
+    setIsDisabled(false);
+    return;
+  }
+
   return (
     <div className="flex space-x-1">
-      <DislikeButtonIcon
-        size={20}
-        fill={isDisliked ? "currentColor" : "none"}
-      />
-      <p>{dislikeCount}</p>
+      <button
+        type="button"
+        onClick={handleDislikeOnClick}
+        disabled={isDisabled}
+      >
+        <DislikeButtonIcon
+          size={20}
+          fill={currentIsDisliked ? "currentColor" : "none"}
+        />
+      </button>
+      <p>{currentDislikeCount}</p>
     </div>
   );
 }
