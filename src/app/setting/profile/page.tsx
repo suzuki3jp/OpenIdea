@@ -14,7 +14,7 @@ export default async function () {
 
   return (
     <SettingBackground>
-      <SettingHeader label="プロフィール設定" />
+      <SettingHeader prevUrl={"/setting"} label="プロフィール設定" />
       <SettingProfileForm currentUser={currentUser} />
     </SettingBackground>
   );
