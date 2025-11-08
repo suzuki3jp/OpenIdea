@@ -1,9 +1,12 @@
 import { ChevronLeft as BackButtonIcon, Circle as Icon } from "lucide-react";
+import { getCurrentUser } from "@/features/auth/get-current-user";
 import { TagBadge } from "@/features/tags/components/tag-badge";
 import type { TagType } from "@/features/tags/types";
+import { createClient } from "@/lib/supabase/server";
+import { getIsLikedByPostId, getLikesCountByPostId } from "../like";
 import type { Post } from "../types";
 import { ContentLock } from "./content-lock";
-import { PostActions } from "./post-actions";
+import { CommentButton, DislikeButton, LikeButton } from "./post-actions";
 
 /* TODO: タグテーブルできたらtestHogeは消す */
 const testPaid = false;
@@ -28,7 +31,7 @@ type PostHeaderProps = {
   tags: TagType[];
 };
 
-function PostHeader({ post, tags }: PostHeaderProps) {
+async function PostHeader({ post, tags }: PostHeaderProps) {
   return (
     <header className="bg-[#FFFEEE]">
       <div className="flex h-full flex-row space-x-5 px-8 pt-32">
@@ -66,5 +69,39 @@ function PostContent({ post, isPaid }: PostContentProps) {
       </article>
       {!isPaid && <ContentLock />}
     </>
+  );
+}
+
+type PostActionsProps = {
+  post: Post;
+};
+
+export async function PostActions({ post }: PostActionsProps) {
+  const client = await createClient();
+  const currentUser = await getCurrentUser(client);
+
+  const isLiked = currentUser
+    ? await getIsLikedByPostId(post.postId, currentUser.id, client)
+    : false;
+  const likeCount = await getLikesCountByPostId(post.postId, client);
+
+  const isDisliked = false; // TODO: dislike機能実装時に修正
+
+  return (
+    <div className="my-5 flex flex-row space-x-8">
+      <LikeButton
+        postId={post.postId}
+        userId={currentUser?.id ?? null}
+        isLiked={isLiked}
+        likeCount={likeCount}
+      />
+      <DislikeButton
+        postId={post.postId}
+        userId={currentUser?.id ?? null}
+        isDisliked={isDisliked}
+        dislikeCount={post.badCount}
+      />
+      <CommentButton postId={post.postId} userId={currentUser?.id ?? null} />
+    </div>
   );
 }
