@@ -12,7 +12,7 @@ export async function createCheckoutSession() {
         price_data: {
           currency: "jpy",
           product_data: {
-            name: "sample post title",
+            name: "アイデアを購入！",
           },
           unit_amount: 500,
         },
