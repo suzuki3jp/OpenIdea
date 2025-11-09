@@ -29,16 +29,22 @@ export async function PostActions({ post, className }: PostActionsProps) {
       <LikeButton
         postId={post.postId}
         userId={currentUser?.id ?? null}
+        authorId={post.userId}
         isLiked={isLiked}
         likeCount={likeCount}
       />
       <DislikeButton
         postId={post.postId}
         userId={currentUser?.id ?? null}
+        authorId={post.userId}
         isDisliked={isDisliked}
         dislikeCount={dislikeCount}
       />
-      <CommentButton postId={post.postId} userId={currentUser?.id ?? null} />
+      <CommentButton
+        postId={post.postId}
+        userId={currentUser?.id ?? null}
+        authorId={post.userId}
+      />
     </div>
   );
 }
