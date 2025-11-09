@@ -1,6 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { PostCard } from "@/features/post/components/post-card";
 import { getPostsByQuery } from "../actions/get-posts-by-query";
-import { HomeCard } from "./home-card";
 
 export async function HomeBody({
   query = "recommended",
@@ -34,7 +34,7 @@ export async function HomeBody({
       {posts.map((post) => {
         const icon = iconByUserId.get(post.userId) ?? null;
 
-        return <HomeCard key={post.postId} {...post} icon={icon} />;
+        return <PostCard key={post.postId} {...post} icon={icon} />;
       })}
     </div>
   );
