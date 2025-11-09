@@ -14,6 +14,18 @@ const items = [
     url: "terms-of-use",
     label: "利用規約",
   },
+  {
+    url: "sale",
+    label: "販売設定",
+  },
+  {
+    url: "sales",
+    label: "販売履歴",
+  },
+  {
+    url: "payment",
+    label: "支払い設定",
+  },
 ];
 
 export function SettingPage() {

@@ -14,7 +14,7 @@ export default async function () {
 
   return (
     <SettingBackground>
-      <SettingHeader prevUrl={"/home"} label="設定" />
+      <SettingHeader prevUrl={"/"} label="設定" />
       <SettingPage />
     </SettingBackground>
   );

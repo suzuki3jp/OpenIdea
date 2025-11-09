@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { createCustomer } from "@/lib/stripe/creat-customer";
+import { createConnectAccount } from "@/lib/stripe/create-connected-account";
 import { createClient } from "@/lib/supabase/server";
 
 export async function GET(request: Request) {
@@ -36,6 +38,9 @@ export async function GET(request: Request) {
             .insert(payload);
 
           if (insertError) return;
+
+          await createConnectAccount(user.id, supabase);
+          await createCustomer(user.id, supabase);
         }
 
         const forwardedHost = request.headers.get("x-forwarded-host");
