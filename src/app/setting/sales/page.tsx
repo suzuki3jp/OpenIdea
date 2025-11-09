@@ -18,5 +18,6 @@ export default async function () {
   }
 
   await redirectToConnectedAccountDashboard(connectedId);
+
   return <div>販売履歴</div>;
 }
