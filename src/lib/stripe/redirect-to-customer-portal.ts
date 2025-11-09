@@ -1,6 +1,9 @@
 import { redirect } from "next/navigation";
 import { stripe } from "@/lib/stripe/stripe";
 
+/*
+ *支払い設定など
+ */
 export async function redirectToCustomerPortal(customerId: string) {
   const customerPortal = await stripe.billingPortal.sessions.create({
     customer: customerId,

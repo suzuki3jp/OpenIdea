@@ -2,8 +2,7 @@ import { redirect } from "next/navigation";
 import { stripe } from "@/lib/stripe/stripe";
 
 /*
- *アカウントリンクの作成
- *販売用アカウント作成後に実行or販売設定ページアクセス時に実行
+ *販売設定ページアクセス
  */
 export async function redirectAccountLink(accountId: string) {
   const accountLink = await stripe.accountLinks.create({

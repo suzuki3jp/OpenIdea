@@ -13,9 +13,12 @@ export async function getConnectedIdByUserId(
     .eq(USER_ID_COLUMN, userId)
     .single();
 
-  if (error) {
-    return false;
+  if (error || !data) {
+    // biome-ignore lint/suspicious/noConsole: <explanation>
+    console.log("No connected account found for user:", userId);
+    return null;
   }
 
-  return data !== null;
+  const connectedId: string = data.connect_account_id;
+  return connectedId;
 }
