@@ -1,6 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { PostCard } from "@/features/post/components/post-card";
 import { getPostsByQuery } from "../actions/get-posts-by-query";
-import { HomeCard } from "./home-card";
 
 export async function HomeBody({
   query = "recommended",
@@ -30,11 +30,13 @@ export async function HomeBody({
   });
 
   return (
-    <div className="no-scrollbar mt-[30px] flex max-h-[600px] flex-col items-center gap-4 overflow-y-scroll">
+    <div
+      className={`no-scrollbar mt-[30px] flex max-h-[600px] flex-col items-center gap-4 overflow-y-scroll ${posts.length > 3 ? "pb-32" : ""}`} // 3 件以上だとメニューバーに投稿が隠れるため padding を追加してスクロール可能にする
+    >
       {posts.map((post) => {
         const icon = iconByUserId.get(post.userId) ?? null;
 
-        return <HomeCard key={post.postId} {...post} icon={icon} />;
+        return <PostCard key={post.postId} {...post} icon={icon} />;
       })}
     </div>
   );
