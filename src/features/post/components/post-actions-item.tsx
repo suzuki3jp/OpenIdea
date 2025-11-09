@@ -13,11 +13,13 @@ import { likePost, unlikePost } from "../like";
 type CommonProps = {
   postId: string;
   userId: string | null;
+  authorId: string;
 };
 
 export function LikeButton({
   postId,
   userId,
+  authorId,
   isLiked,
   likeCount,
 }: CommonProps & { isLiked: boolean; likeCount: number }) {
@@ -52,7 +54,11 @@ export function LikeButton({
 
   return (
     <div className="flex space-x-1">
-      <button type="button" onClick={handleLikeOnClick} disabled={isDisabled}>
+      <button
+        type="button"
+        onClick={handleLikeOnClick}
+        disabled={isDisabled || userId === authorId}
+      >
         <LikeButtonIcon
           size={20}
           fill={currentIsLiked ? "currentColor" : "none"}
@@ -68,6 +74,7 @@ export function DislikeButton({
   userId,
   isDisliked,
   dislikeCount,
+  authorId,
 }: CommonProps & { isDisliked: boolean; dislikeCount: number }) {
   const [isDisabled, setIsDisabled] = useState(false);
 
@@ -103,7 +110,7 @@ export function DislikeButton({
       <button
         type="button"
         onClick={handleDislikeOnClick}
-        disabled={isDisabled}
+        disabled={isDisabled || userId === authorId}
       >
         <DislikeButtonIcon
           size={20}
