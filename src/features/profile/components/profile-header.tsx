@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { User } from "@/features/auth/convert-db-user-to-user";
 import { FollowContainer } from "./follow-container";
 import { ProfileBackArrow } from "./profile-back-arrow";
@@ -21,7 +22,9 @@ export async function ProfileHeader({
 
   return (
     <div className="h-82 w-full bg-white shadow-[4px_4px_4px_0px_rgba(0,0,0,0.4)]">
-      <ProfileBackArrow />
+      <Link href="/">
+        <ProfileBackArrow />
+      </Link>
       <ProfileBanner bannerPath={user?.bannerPath ?? ""} />
       <div className="relative mx-8 flex h-9 items-end">
         <ProfileIcon iconPath={user?.iconPath ?? ""} />
